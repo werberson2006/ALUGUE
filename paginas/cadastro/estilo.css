@@ -45,14 +45,14 @@ body{
     transition: all 1s ease;
 }
 
-.container .login-form .title{
+.container .cadastro-form .title{
     position: relative;
     font-size: 25px;
     font-weight: 500;
     color: rgb(75, 75, 75);
 }
 
-.container .login-form .title::before{
+.container .cadastro-form .title::before{
     content: '';
     position: absolute;
     left: 0;
@@ -62,7 +62,7 @@ body{
     background-color: var(--default-color);
 }
 
-.container .login-form .input-box{
+.container .cadastro-form .input-box{
     display: flex;
     align-items: center;
     height: 50px;
@@ -71,7 +71,7 @@ body{
     position: relative;
 }
 
-.container .login-form .input-box input{
+.container .cadastro-form .input-box input{
     height: 100%;
     width: 100%;
     outline: none;
@@ -83,12 +83,12 @@ body{
     transition: all 0.9s ease;
 }
 
-.container .login-form .input-box input:focus,
-.container .login-form .input-box input:valid{
+.container .cadastro-form .input-box input:focus,
+.container .cadastro-form .input-box input:valid{
     border-color: var(--default-color);
 }
 
-.container .login-form .input-box input[type="submit"]{
+.container .cadastro-form .input-box input[type="submit"]{
     background-color: var(--default-color);
     border: 0;
     color: #fff;
@@ -97,39 +97,39 @@ body{
     font-size: 22px;
 }
 
-.container .login-form .input-box input[type="submit"]:hover{
+.container .cadastro-form .input-box input[type="submit"]:hover{
     background-color: rgb(0, 172, 134);
     transition: all 0.8s ease;
 }
 
-.container .login-form .input-box .material-icons{
+.container .cadastro-form .input-box .material-icons{
     position: absolute;
     color: var(--default-color);
     font-size: 17px;
 }
 
-.container .login-form .forgot a{
+.container .cadastro-form .forgot a{
     color: var(--default-color);
     text-decoration: none;
 }
 
-.container .login-form .forgot a:hover{
+.container .cadastro-form .forgot a:hover{
     color: red;
     transition: all 0.4s ease-in-out;
 }
 
-.container .login-form .signup-text a{
+.container .cadastro-form .signup-text a{
     color: var(--default-color);
     text-decoration: none;
 
 }
 
-.container .login-form .signup-text a:hover{
+.container .cadastro-form .signup-text a:hover{
     color: rgb(0, 172, 134);
     transition: all 0.8s ease;
 }
 
-.container .login-form .img .logo{
+.container .cadastro-form .img .logo{
     width: 30%;
     display: block;
     margin-left: auto;

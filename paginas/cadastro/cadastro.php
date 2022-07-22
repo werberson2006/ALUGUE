@@ -20,7 +20,7 @@
 
     <div class="container">
       <!-- FORMULÁRIO CADASTRO -->
-      <div class="login-form">
+      <div class="cadastro-form">
         
         <div class="img">
           <img class="logo" src="../../img/logo_verde.png">
