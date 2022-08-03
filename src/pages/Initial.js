@@ -30,7 +30,7 @@ export default function Inicio() {
                 <Text style={styles.title}>Aqui você encontrará opções de imóveis para alugar próximos a você!</Text>
                 <Text style={styles.text}>Faça login para acessar</Text>
 
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.button}>
+                <TouchableOpacity onPress={() => navigation.navigate('login')} style={styles.button}>
                     
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>

@@ -1,42 +1,39 @@
 
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
-import * as Animatable from 'react-native-animatable';
-
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert} from "react-native";
+import * as Animatable from 'react-native-animatable'
+import firebase from '../../firebase';
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 
 import {useNavigation} from '@react-navigation/native'
-import firebase from '../../firebase';
 
-export default function Login() {
+export default function Cadastro() {
 
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [erroLogin, setErroLogin] = useState('');
-    const [emailVerified, setErroEmail] = useState('');
+    const [erroCadastro, setErroCadastro] = useState('')
 
-    const Logar = () => {
-        
-        firebase.auth().signInWithEmailAndPassword(email,senha).then((userCredential)=>{
-           let user = userCredential.user;
-           
-           
-           if(user.emailVerified) {
-            navigation.navigate('home')
-           }else {
-            console.log("verificar email")
-            setErroEmail(true)
-           }
-           
-            
+    const Cadastrar = () => {
+
+        firebase.auth().createUserWithEmailAndPassword(email, senha).then(() =>{
+            Alert.alert("Feito!", "Usuário cadastrado com sucesso.");
+            firebase.auth().currentUser.sendEmailVerification().then(()=>{
+                console.log("ENVIOU!");
+                
+            });
+            navigation.navigate("login")
         }).catch((error)=>{
-            setErroLogin(true)
+            setErroCadastro(true)
             let errorCode = error.code;
             let errorMessage = error.message;
         })
     }
+
+    useEffect(()=>{
+        
+    }, []);
         
 
     return (
@@ -52,7 +49,7 @@ export default function Login() {
             </View>
 
             <Animatable.View animation="fadeInDown" delay={400} style={styles.containerHeader}>
-            <Text style={styles.message}>Login</Text>
+            <Text style={styles.message}>Cadastro</Text>
             </Animatable.View>
 
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
@@ -74,7 +71,7 @@ export default function Login() {
                 secureTextEntry={true}
                 />
 
-                {erroLogin === true
+                {erroCadastro === true
                     ?
                     <View style={styles.alerta}>
                         <MaterialCommunityIcons
@@ -90,62 +87,31 @@ export default function Login() {
                     <View/>
                 }
 
-                {emailVerified === true
-                    ?
-                    <View style={styles.alerta}>
-                        <MaterialCommunityIcons
-                        name="alert-circle"
-                        size={24}
-                        color="#bdbdbd"
-                        />
-                        <Text style={styles.warningAlert}>Email não verificado!</Text>
-                            
-                        
-                    </View>
-                    :
-                    <View/>
-                }
-
                 {email === "" || senha === ""
                 ?
                 <TouchableOpacity 
-                style={styles.button}
+                style={styles.buttonApagado}
                 disabled={true}
                 >
-                    <Text style={styles.buttonText}>Entrar</Text>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity 
-                style={styles.button} onPress={Logar}
+                style={styles.button} onPress={Cadastrar}
                 
                 >
-                    <Text style={styles.buttonText}>Entrar</Text>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
                 }
                 
-                
-
-
-                <TouchableOpacity style={styles.buttonEsqueceu}>
-                    <Text style={styles.textEsqueceu}>Esqueci minha senha!</Text>
-                </TouchableOpacity>
 
             </Animatable.View>
             
-            <Animatable.View animation="fadeInDown">
-                
-            <Text style={styles.buttonCadastre}>
-            Não tem uma conta?
-                <Text style={styles.textCadastro} onPress={() => navigation.navigate('cadastro')}> Cadastre-se!</Text>
-            </Text>
             
-            </Animatable.View>
 
         </View>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container:{
@@ -210,6 +176,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#5CC6BA",
+        alignSelf: "center"
+    },
+
+    buttonApagado: {
+        width: "90%",
+        height: 40,
+        borderRadius: 24,
+        alignContent:"center",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#bdbdbd",
         alignSelf: "center"
     },
 

@@ -8,6 +8,7 @@ import Initial from './pages/Initial';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,16 +25,24 @@ function Routes(){
                 </Stack.Screen>
                 
                 <Stack.Screen
-                name="Login"
+                name="login"
                 component={Login}
                 options={{headerShown: false}}
+                />
+
+                <Stack.Screen
+                name="cadastro"
+                component={Cadastro}
+                options={{
+                    title: 'CADASTRO', 
+                }}
                 />
 
                 <Stack.Screen 
                 name="home" 
                 component={Home}
                 options={{
-                    title: 'ALUGUE',
+                    title: 'ALUGUEL FÁCIL', 
                     
 
                     headerRight: () =>(
@@ -41,11 +50,13 @@ function Routes(){
                             <Feather 
                             name="shopping-bag" 
                             size={24}
-                            color="#000"
+                            color="black"
                             />
                 
                         </TouchableOpacity>
                     )
+
+                    
                 }}
                 />
 
