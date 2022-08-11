@@ -1,6 +1,44 @@
 <?php 
 
+session_start();
 include_once "header.php";
+include_once "Database/conexao.php"; //INCLUI A CONEXÃO
+
+if(isset($_POST['entrar'])){
+
+  $email = mysqli_real_escape_string($con, $_POST['email']);
+  $senha = mysqli_real_escape_string($con, $_POST['senha']);
+  $senha = md5($senha);
+
+  //VERIFICA SE EXISTE UM USUÁRIO NO BANCO
+  $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
+  $result = mysqli_query($con, $sql);
+  $resultado = mysqli_fetch_assoc($result);
+
+  if(mysqli_num_rows($result) < 1) {
+
+    $_SESSION['mensagem'] = 'Email ou senha inválidos!';
+    header("Location: ".URL);
+
+  }else {
+
+    $_SESSION['acesso'] = $resultado['acesso'];
+  
+    if($_SESSION['acesso'] == "LOCATARIO") {
+      
+      $_SESSION['nome'] = $resultado['nome'];
+      $_SESSION['logado'] = true;
+      header('Location: '.URL."/pages/home");
+
+    } else {
+
+      $_SESSION['nome'] = $resultado['nome'];
+      $_SESSION['logado'] = true;
+      header('Location: '.URL."/pages/locador");
+    }
+  }
+}
+
 
 ?>
 
@@ -44,11 +82,10 @@ include_once "header.php";
 
         </form>
         <!-- FIM DO FORMULÁRIO LOGIN -->
-        <div class="msg">
-          <div class="alert alert-success" role="alert">
-            
-          </div>
-        </div>
+
+    
+        
+
       </div>
     </div>
     <?php 

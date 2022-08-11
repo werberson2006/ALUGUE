@@ -7,11 +7,11 @@ class Pages extends Controller {
     }
 
     public function home(){
-
+        $this->view('home');
     }
 
-    public function loc_admin(){
-        
+    public function locador(){
+        $this->view('locador');
     }
 
 

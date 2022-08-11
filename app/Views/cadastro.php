@@ -1,5 +1,6 @@
 <?php 
 
+include_once "message.php"; //INCLUI A MENSAGEM
 include_once "header.php";  //CABEÇALHO
 include_once "Database/conexao.php"; //INCLUI A CONEXÃO
  
@@ -14,12 +15,13 @@ include_once "Database/conexao.php"; //INCLUI A CONEXÃO
     $senha = md5($senha);
     
     //VERIFICA SE O EMAIL JÁ EXISTE NO BANCO
-    $sql = "SELECT * FROM `usuarios` WHERE `email` = '$email'";
+    $sql = "SELECT * FROM usuarios WHERE email = '$email'";
     $result = mysqli_query($con, $sql);
     $rows = mysqli_num_rows($result);
 
     //SE ENCONTRAR UM EMAIL EXISTENTE NO BANCO
     if($rows == 1){
+      $_SESSION['mensagem'] = 'Email já cadastrado!';
       header("Location: ".URL."/usuarios/cadastro");
     }else {
 
@@ -31,10 +33,12 @@ include_once "Database/conexao.php"; //INCLUI A CONEXÃO
       if(mysqli_insert_id($con)){
         
         //REDIRECIONA PARA LOGIN
+        $_SESSION['mensagem'] = 'Cadastro realizado com sucesso!';
         header("Location: ".URL);
       } else {
 
         //CASO DÊ ERRO REDIRECIONA PRA TELA DE CADASTRO
+        $_SESSION['mensagem'] = 'Erro ao cadastrar!';
         header("Location: ".URL."/usuarios/cadastro");
       }
     }
@@ -44,7 +48,6 @@ include_once "Database/conexao.php"; //INCLUI A CONEXÃO
 <head>
   <title><?=APP_NOME ?> | Cadastro</title>
   <link rel="stylesheet" href="<?=URL ?>/public/css/style_cadastro.css">
-  
 </head>
 
   <body>
@@ -73,22 +76,22 @@ include_once "Database/conexao.php"; //INCLUI A CONEXÃO
           
           <div class="input-box">
             <span class="material-icons">person</span>
-            <input id="nome" name="nome"  id="nome" name="nome" type="text" placeholder="Digite seu nome" maxlength="20" minlength="2" >
+            <input id="nome" name="nome"  id="nome" name="nome" type="text" placeholder="Digite seu nome" maxlength="20" minlength="2" required>
           </div>
 
           <div class="input-box">
             <span class="material-icons">email</span>
-            <input id="email" name="email" type="email" placeholder="Digite um email" maxlength="50" >
+            <input id="email" name="email" type="email" placeholder="Digite um email" maxlength="50" required>
           </div>
 
           <div class="input-box">
             <span class="material-icons">lock</span>
-            <input id="senha" name="senha" type="password" placeholder="Digite uma senha" minlength="6" maxlength="10" >
+            <input id="senha" name="senha" type="password" placeholder="Digite uma senha" minlength="6" maxlength="10" required>
           </div>
 
           <div class="input-box">
             <span class="material-icons">lock</span>
-            <input type="password" id="senha2" name="senha2" placeholder="Confirme a senha" minlength="6" maxlength="10" >
+            <input type="password" id="senha2" name="senha2" placeholder="Confirme a senha" minlength="6" maxlength="10" required>
           </div>
           
         
@@ -99,12 +102,27 @@ include_once "Database/conexao.php"; //INCLUI A CONEXÃO
           <div class="signup-text">
             Já tem uma conta? <a href="<?=URL?>/">Entrar</a>
           </div>
-
-          
         </form>
+
+        <?php 
+
+          if(isset($msg)) { ?>
+            <div class="msg">
+            <div class="alert alert-danger" role="alert" >
+              <?php echo $msg ?>
+            </div>
+          </div>
+            <?php
+          }
+
+        ?>
+  
+
       </div>
       <!-- FIM DO FORMULÁRIO CADASTRO -->
     </div>
+
+
 
     <?php 
 
